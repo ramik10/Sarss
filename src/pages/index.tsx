@@ -1,21 +1,21 @@
-import Image from "next/image"
+import Image from "next/image";
 
 const AlternatingImageDescription = () => {
   const items = [
     {
-      imgSrc: '/white.png',
-      alt: 'Image 1',
-      description: 'This is the description for the first image.',
+      imgSrc: "/white.png",
+      alt: "Image 1",
+      description: "This is the description for the first image.",
     },
     {
-      imgSrc: '/white.png',
-      alt: 'Image 2',
-      description: 'This is the description for the second image.',
+      imgSrc: "/white.png",
+      alt: "Image 2",
+      description: "This is the description for the second image.",
     },
     {
-      imgSrc: '/white.png',
-      alt: 'Image 3',
-      description: 'This is the description for the third image.',
+      imgSrc: "/white.png",
+      alt: "Image 3",
+      description: "This is the description for the third image.",
     },
   ];
 
@@ -25,7 +25,7 @@ const AlternatingImageDescription = () => {
         <div
           key={index}
           className={`flex flex-col md:flex-row items-center gap-6 my-8 ${
-            index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+            index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
           }`}
         >
           <div className="relative overflow-hidden rounded-lg md:w-1/2 w-full">
@@ -46,35 +46,42 @@ const AlternatingImageDescription = () => {
   );
 };
 
-const Home = ()=>{
+const Home = () => {
   return (
-    <div className="relative min-h-screen">
-    <div className="flex justify-end bg-[#1B4242] w-full h-[54px] max-h-[15%] text-white">
-      <div className="w-[10%] max-w-[30%] h-[54px] max-h-[15%] mr-[5%]">
-        <div className="flex justify-between mt-[5%]">
-        <div className="text-white text-xl">
+    <div className="relative min-h-screen flex flex-col">
+      <header className="bg-[#1B4242] w-full h-[54px] text-white flex justify-end items-center px-6">
+        <nav className="flex gap-6">
+          <div className="text-white text-xl cursor-pointer hover:text-gray-300">
             Login
-        </div>
-        <div className="text-white text-xl">
+          </div>
+          <div className="text-white text-xl cursor-pointer hover:text-gray-300">
             About Us
-        </div>
-        </div>
-      </div>
-    </div>
-    <div className="w-full h-[90vh]">
-      <div className="relative flex justify-start w-1/6 h-[72px] max-h-[8%] m-5">
-        <Image src="/sar.png" alt="Sars image" layout="fill" objectFit="contain" />
-      </div>
-      <div className="max-h-[90%]">
-      <AlternatingImageDescription/>
-      </div>
-    </div>
-    <div className="absolute bg-[#1B4242] w-full h-[54px] max-h-[15%] text-white bottom-0">
-    <div>
-    </div>
-  </div>
-  </div>
-  )
-}
+          </div>
+        </nav>
+      </header>
 
-export default Home
+      <main className="flex-1">
+        <div className="relative w-1/4 sm:w-1/6 h-[72px] m-5">
+          <Image
+            src="/sar.png"
+            alt="Sars image"
+            layout="fill"
+            objectFit="contain"
+            className="rounded-lg"
+          />
+        </div>
+
+        <section className="max-w-7xl mx-auto px-4">
+          <AlternatingImageDescription />
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-[#1B4242] w-full h-[54px] text-white flex items-center justify-center">
+        <p>&copy; 2024 Your Company. All rights reserved.</p>
+      </footer>
+    </div>
+  );
+};
+
+export default Home;

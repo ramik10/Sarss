@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from 'next/link'
 
 const AlternatingImageDescription = () => {
   const items = [
@@ -51,12 +52,16 @@ const Home = () => {
     <div className="relative min-h-screen flex flex-col">
       <header className="bg-[#1B4242] w-full h-[54px] text-white flex justify-end items-center px-6">
         <nav className="flex gap-6">
+          <Link href="/loginpage">
           <div className="text-white text-xl cursor-pointer hover:text-gray-300">
             Login
           </div>
+          </Link>
+          <Link href="/">
           <div className="text-white text-xl cursor-pointer hover:text-gray-300">
             About Us
           </div>
+          </Link>
         </nav>
       </header>
 
@@ -78,7 +83,7 @@ const Home = () => {
 
       {/* Footer */}
       <footer className="bg-[#1B4242] w-full h-[54px] text-white flex items-center justify-center">
-        <p>&copy; 2024 Your Company. All rights reserved.</p>
+        <p>&copy; 2025 GCELT All Rights Reserved. Developed & Maintained by SARSS</p>
       </footer>
     </div>
   );

@@ -40,9 +40,11 @@ const Home = () => {
     <div className="relative min-h-screen flex flex-col">
       <header className="bg-[#1B4242] w-full h-[54px] text-white flex justify-end items-center px-10 md:px-16">
         <nav className="flex gap-6">
+        <Link href="/">
           <div className="text-white text-xl cursor-pointer hover:text-gray-300">
             Home
           </div>
+          </Link>
         </nav>
       </header>
 

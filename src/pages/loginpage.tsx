@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+
 const ClickableBoxes = () => {
   return (
     <div className="container mx-auto my-16 px-4 max-w-5xl">
@@ -59,6 +60,7 @@ const Home = () => {
         <section className="flex flex-col items-center justify-center py-10 md:py-48">
           <ClickableBoxes />
         </section>
+
       </main>
 
       <footer className="bg-[#1B4242] w-full h-[54px] text-white flex items-center justify-center">

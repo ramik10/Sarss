@@ -31,7 +31,7 @@ const Home = () => {
           />
         </div>
 
-        <section className="flex flex-col items-center justify-center py-10 md:py-48">
+        <section className="py-10 md:py-48 px-32 md:px-64">
             <StudentDetailsForm
                 title="Student Details"
                 onSubmit={handleSubmit}

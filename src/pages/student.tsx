@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 const student = () => {
   const [student] = useState({
-    name: "John Doe",
+    name: "John Dam",
     roll: "CSE/2023/001",
     semester: "6th",
     department: "Computer Science",

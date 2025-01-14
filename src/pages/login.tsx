@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import LoginForm from "@/components/forms/LoginForm";
 import { motion } from "framer-motion";
+import { useRouter } from 'next/navigation'
 
 interface FeatureCardProps {
   title: string;
@@ -25,6 +26,9 @@ interface PanelBoxProps {
   onClick: () => void;
 }
 
+const username = {student:"sayantan", college:"gcelt", company:"tcs"}
+const password = {student:"sayan123", college:"gceltadmin", company:"tcs123"}
+
 const PanelBox: React.FC<PanelBoxProps> = ({ title, description, icon, onClick }) => (
   <motion.div
     whileHover={{ scale: 1.05 }}
@@ -41,6 +45,8 @@ const PanelBox: React.FC<PanelBoxProps> = ({ title, description, icon, onClick }
 const Home: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
+  const router = useRouter()
+
 
   const openModal = (title: string) => {
     setModalTitle(title);
@@ -239,6 +245,36 @@ const Home: React.FC = () => {
                 onCancel={closeModal}
                 onSubmit={(data) => {
                   console.log("Submitted data:", data);
+                  switch (modalTitle){
+                    case "Student Portal Login":{
+                      console.log(data.username)
+                      if (username.student===data.username && password.student===data.password){
+                        router.push("/student")
+                      } else{
+                        alert("wrong credentials given")
+                      }
+                      break;
+                    }
+                    case "College Admin Login":{
+                      if (username.college===data.username && password.college===data.password){
+                        router.push("/college")
+                      } else{
+                        alert("wrong credentials given")
+                      }
+                      break;
+                    }
+                    case "Company Access Login":{
+                      if (username.company===data.username && password.company===data.password){
+                        router.push("/company")
+                      } else{
+                        alert("wrong credentials given")
+                      }
+                      break;
+                    }
+                    default:
+                      console.log("No such case exists!");
+                      break;
+                  }
                   closeModal();
                 }}
                 onForgotPassword={() => alert("Forgot password clicked!")}

@@ -217,32 +217,43 @@ const Home = () => {
       </div>
 
       <header className="bg-[#1B4242] shadow-md relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="relative w-32 h-8">
-              <Image
-                src="/sar.png"
-                alt="SARSS Logo"
-                layout="fill"
-                objectFit="contain"
-                className="rounded-lg"
-              />
-            </div>
-            <nav className="flex gap-8">
-              <Link href="/login">
-                <div className="text-white hover:text-gray-200 transition-colors font-medium">
-                  Login
-                </div>
-              </Link>
-              <Link href="/">
-                <div className="text-white hover:text-gray-200 transition-colors font-medium">
-                  About Us
-                </div>
-              </Link>
-            </nav>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex justify-between items-center h-16">
+      <div className="relative w-32 h-8">
+        <Image
+          src="/sar.png"
+          alt="SARSS Logo"
+          layout="fill"
+          objectFit="contain"
+          className="rounded-lg"
+        />
+      </div>
+      <nav className="flex gap-8 items-center">
+        <Link href="/login">
+          <div className="text-white hover:text-gray-200 transition-colors font-medium">
+            Login
           </div>
-        </div>
-      </header>
+        </Link>
+        <Link href="/">
+          <div className="text-white hover:text-gray-200 transition-colors font-medium">
+            About Us
+          </div>
+        </Link>
+        {/* Logout Button */}
+        <button
+          onClick={() => {
+            localStorage.clear(); // Clear login info
+  
+          }}
+          className="text-white hover:text-gray-200 transition-colors font-medium"
+        >
+          Logout
+        </button>
+      </nav>
+    </div>
+  </div>
+</header>
+
 
       <main className="flex-1 py-12 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

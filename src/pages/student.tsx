@@ -1,17 +1,35 @@
 import Image from "next/image";
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
-const student = () => {
-  const router = useRouter()
-  useEffect(()=>{
-    const value = localStorage.getItem("student")
-    if(value!=="1"){
-      router.push("/")
+const Navbar: React.FC = () => {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("student");
+    router.push("/login");
+  };
+
+  return (
+    <nav className="flex gap-6">
+      <Link href="/" className="hover:text-gray-300 transition">Home</Link>
+      <Link href="/profile" className="hover:text-gray-300 transition">Profile</Link>
+      <Link href="/resume" className="hover:text-gray-300 transition">Resume</Link>
+      <button onClick={handleLogout} className="hover:text-gray-300 transition">Logout</button>
+    </nav>
+  );
+};
+
+const Student: React.FC = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const value = sessionStorage.getItem("student");
+    if (value !== "1") {
+      router.push("/");
     }
-    return
-  },[])
+  }, [router]);
 
   const [student] = useState({
     name: "John Dam",
@@ -39,11 +57,7 @@ const student = () => {
             />
             <span className="text-xl font-semibold">Student Portal</span>
           </div>
-          <nav className="flex gap-6">
-            <Link href="/" className="hover:text-gray-300 transition">Home</Link>
-            <Link href="/profile" className="hover:text-gray-300 transition">Profile</Link>
-            <Link href="/resume" className="hover:text-gray-300 transition">Resume</Link>
-          </nav>
+          <Navbar />
         </div>
       </header>
 
@@ -134,4 +148,4 @@ const student = () => {
   );
 };
 
-export default student;
+export default Student;

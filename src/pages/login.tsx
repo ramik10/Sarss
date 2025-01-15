@@ -1,4 +1,3 @@
-"use client"
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -250,7 +249,6 @@ const Home: React.FC = () => {
                     case "Student Portal Login":{
                       console.log(data.username)
                       if (username.student===data.username && password.student===data.password){
-                        localStorage.setItem("student","1")
                         router.push("/student")
                       } else{
                         alert("wrong credentials given")
@@ -259,7 +257,6 @@ const Home: React.FC = () => {
                     }
                     case "College Admin Login":{
                       if (username.college===data.username && password.college===data.password){
-                        localStorage.setItem("college","1")
                         router.push("/college")
                       } else{
                         alert("wrong credentials given")
@@ -268,7 +265,6 @@ const Home: React.FC = () => {
                     }
                     case "Company Access Login":{
                       if (username.company===data.username && password.company===data.password){
-                        localStorage.setItem("company","1")
                         router.push("/company")
                       } else{
                         alert("wrong credentials given")

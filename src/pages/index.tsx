@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from "next/image";
 import Link from 'next/link';
 import { Calendar, Clock, ChevronRight, ChevronLeft } from 'lucide-react';
@@ -103,6 +103,15 @@ const Carousel: React.FC<{ posts: BlogPostProps[] }> = ({ posts }) => {
 };
 
 const Home = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+  useEffect(()=>{
+    const student = localStorage.getItem("student")
+    const college = localStorage.getItem("college")
+    const company = localStorage.getItem("company")
+    if(student || college || company){
+      setIsLoggedIn(true)
+    }
+  },[])
   const blogPosts = [
     {
       imgSrc: "/white.png",
@@ -229,26 +238,26 @@ const Home = () => {
         />
       </div>
       <nav className="flex gap-8 items-center">
-        <Link href="/login">
+        {!isLoggedIn && <Link href="/login">
           <div className="text-white hover:text-gray-200 transition-colors font-medium">
             Login
           </div>
-        </Link>
+        </Link>}
         <Link href="/">
           <div className="text-white hover:text-gray-200 transition-colors font-medium">
             About Us
           </div>
         </Link>
         {/* Logout Button */}
-        <button
+        {isLoggedIn && <button
           onClick={() => {
             localStorage.clear(); // Clear login info
-  
+            window.location.href="/"
           }}
           className="text-white hover:text-gray-200 transition-colors font-medium"
         >
           Logout
-        </button>
+        </button>}
       </nav>
     </div>
   </div>

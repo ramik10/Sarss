@@ -1,8 +1,18 @@
 import Image from "next/image";
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation'
 
 const student = () => {
+  const router = useRouter()
+  useEffect(()=>{
+    const value = localStorage.getItem("student")
+    if(value!=="1"){
+      router.push("/")
+    }
+    return
+  },[])
+
   const [student] = useState({
     name: "John Dam",
     roll: "CSE/2023/001",

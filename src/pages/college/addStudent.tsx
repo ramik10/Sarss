@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import StudentDetailsForm from "@/components/forms/studentDetails";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface FormData {
   fullName: string;
@@ -15,6 +17,14 @@ interface FormData {
 
 
 const Home = () => {
+   const router = useRouter()
+    useEffect(()=>{
+        const value = localStorage.getItem("college")
+        if(value!=="1"){
+          router.push("/")
+        }
+        return
+      },[])
   const handleSubmit = (formData: FormData) => {
     console.log("Form Data:", formData);
   };

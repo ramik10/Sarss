@@ -1,10 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 
 
 
 const Home = () => {
+  const router = useRouter()
+      useEffect(()=>{
+          const value = localStorage.getItem("college")
+          if(value!=="1"){
+            router.push("/")
+          }
+          return
+        },[])
   return (
     <div className="relative min-h-screen flex flex-col">
       <header className="bg-[#1B4242] w-full h-[54px] text-white flex justify-end items-center px-10 md:px-16">

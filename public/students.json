@@ -1,0 +1,73 @@
+[
+    {
+      "id": 1,
+      "name": "John Doe",
+      "age": 21,
+      "email": "john.doe@example.com",
+      "course": "Computer Science"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "age": 22,
+      "email": "jane.smith@example.com",
+      "course": "Information Technology"
+    },
+    {
+      "id": 3,
+      "name": "Alice Johnson",
+      "age": 20,
+      "email": "alice.johnson@example.com",
+      "course": "Data Science"
+    },
+    {
+      "id": 4,
+      "name": "Bob Brown",
+      "age": 23,
+      "email": "bob.brown@example.com",
+      "course": "Cybersecurity"
+    },
+    {
+      "id": 5,
+      "name": "Charlie Davis",
+      "age": 21,
+      "email": "charlie.davis@example.com",
+      "course": "Artificial Intelligence"
+    },
+    {
+      "id": 6,
+      "name": "Emily Wilson",
+      "age": 22,
+      "email": "emily.wilson@example.com",
+      "course": "Software Engineering"
+    },
+    {
+      "id": 7,
+      "name": "Frank Taylor",
+      "age": 24,
+      "email": "frank.taylor@example.com",
+      "course": "Network Engineering"
+    },
+    {
+      "id": 8,
+      "name": "Grace Lee",
+      "age": 20,
+      "email": "grace.lee@example.com",
+      "course": "Machine Learning"
+    },
+    {
+      "id": 9,
+      "name": "Harry White",
+      "age": 22,
+      "email": "harry.white@example.com",
+      "course": "Blockchain Development"
+    },
+    {
+      "id": 10,
+      "name": "Ivy Green",
+      "age": 23,
+      "email": "ivy.green@example.com",
+      "course": "Cloud Computing"
+    }
+  ]
+  

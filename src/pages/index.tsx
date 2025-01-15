@@ -243,7 +243,7 @@ const Home = () => {
             Login
           </div>
         </Link>}
-        <Link href="/">
+        <Link href="/about">
           <div className="text-white hover:text-gray-200 transition-colors font-medium">
             About Us
           </div>

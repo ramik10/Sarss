@@ -1,73 +1,72 @@
 [
-    {
-      "id": 1,
-      "name": "John Doe",
-      "age": 21,
-      "email": "john.doe@example.com",
-      "course": "Computer Science"
-    },
-    {
-      "id": 2,
-      "name": "Jane Smith",
-      "age": 22,
-      "email": "jane.smith@example.com",
-      "course": "Information Technology"
-    },
-    {
-      "id": 3,
-      "name": "Alice Johnson",
-      "age": 20,
-      "email": "alice.johnson@example.com",
-      "course": "Data Science"
-    },
-    {
-      "id": 4,
-      "name": "Bob Brown",
-      "age": 23,
-      "email": "bob.brown@example.com",
-      "course": "Cybersecurity"
-    },
-    {
-      "id": 5,
-      "name": "Charlie Davis",
-      "age": 21,
-      "email": "charlie.davis@example.com",
-      "course": "Artificial Intelligence"
-    },
-    {
-      "id": 6,
-      "name": "Emily Wilson",
-      "age": 22,
-      "email": "emily.wilson@example.com",
-      "course": "Software Engineering"
-    },
-    {
-      "id": 7,
-      "name": "Frank Taylor",
-      "age": 24,
-      "email": "frank.taylor@example.com",
-      "course": "Network Engineering"
-    },
-    {
-      "id": 8,
-      "name": "Grace Lee",
-      "age": 20,
-      "email": "grace.lee@example.com",
-      "course": "Machine Learning"
-    },
-    {
-      "id": 9,
-      "name": "Harry White",
-      "age": 22,
-      "email": "harry.white@example.com",
-      "course": "Blockchain Development"
-    },
-    {
-      "id": 10,
-      "name": "Ivy Green",
-      "age": 23,
-      "email": "ivy.green@example.com",
-      "course": "Cloud Computing"
-    }
-  ]
-  
+  {
+    "id": 1,
+    "name": "John Doe",
+    "roll": "20XX01CS001",
+    "branch": "Computer Science",
+    "skills": ["JavaScript", "React", "Node.js"],
+    "cgpa": "9.1",
+    "year": "Final",
+    "image": "/images/john_doe.jpg",
+    "internships": [
+      "Frontend Developer at XYZ Corp",
+      "Backend Intern at ABC Ltd"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "roll": "20XX01EC002",
+    "branch": "Electronics and Communication",
+    "skills": ["C++", "Embedded Systems", "VHDL"],
+    "cgpa": "8.7",
+    "year": "Third",
+    "image": "/images/jane_smith.jpg",
+    "internships": [
+      "Embedded Systems Intern at DEF Inc",
+      "Research Assistant at GHI Labs"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Michael Johnson",
+    "roll": "20XX01ME003",
+    "branch": "Mechanical Engineering",
+    "skills": ["CAD", "MATLAB", "Finite Element Analysis"],
+    "cgpa": "8.5",
+    "year": "Second",
+    "image": "/images/michael_johnson.jpg",
+    "internships": [
+      "Design Intern at JKL Designs",
+      "Thermal Analysis Intern at MNO Engineering"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Emily Davis",
+    "roll": "20XX01IT004",
+    "branch": "Information Technology",
+    "skills": ["Python", "Django", "Machine Learning"],
+    "cgpa": "9.3",
+    "year": "Final",
+    "image": "/images/emily_davis.jpg",
+    "internships": [
+      "Data Science Intern at PQR Analytics",
+      "Full-Stack Developer Intern at STU Solutions"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Chris Lee",
+    "roll": "20XX01CE005",
+    "branch": "Civil Engineering",
+    "skills": ["AutoCAD", "Structural Analysis", "Surveying"],
+    "cgpa": "8.2",
+    "year": "Third",
+    "image": "/images/chris_lee.jpg",
+    "internships": [
+      "Site Engineer Intern at VWX Constructions",
+      "Structural Analysis Intern at YZ Builders"
+    ]
+  }
+]

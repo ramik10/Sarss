@@ -1,12 +1,29 @@
 import Image from "next/image";
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useEffect } from "react";
-import StudentTable from '../components/studentTable';
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Search, GraduationCap, Briefcase, ChevronRight, X } from "lucide-react";
 
-const Company: React.FC = () => {
+interface Student {
+  id: number;
+  name: string;
+  branch: string;
+  roll: string;
+  skills: string[];
+  cgpa: number;
+  year: string;
+  internships: string[];
+  image: string; // Added image property
+}
+
+const Company = () => {
   const router = useRouter();
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [students, setStudents] = useState<Student[]>([]);
 
+  // Redirect if the user is not authorized
   useEffect(() => {
     const value = localStorage.getItem("company");
     if (value !== "1") {
@@ -14,14 +31,39 @@ const Company: React.FC = () => {
     }
   }, [router]);
 
+  // Fetch students data from JSON
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await fetch("/students.json"); // Adjust the path if necessary
+        if (!response.ok) {
+          throw new Error(`Failed to fetch students: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setStudents(data);
+      } catch (error) {
+        console.error("Error fetching students:", error);
+      }
+    };
+
+    fetchStudents();
+  }, []);
+
+  // Filter students based on search term
+  const filteredStudents = students.filter((student) =>
+    [student.name, student.branch, student.roll]
+      .some((field) => field.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 to-[#1B4242]">
-      <header className="bg-[#1B4242]/95 backdrop-blur-sm shadow-lg sticky top-0 z-50">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1B4242] to-[#092635]">
+      {/* Header */}
+      <header className="bg-[#1B4242]/95 backdrop-blur-lg border-b border-teal-700/30 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-8">
               <Link href="/">
-                <div className="relative w-32 h-8 cursor-pointer">
+                <div className="relative w-32 h-8">
                   <Image
                     src="/sar.png"
                     alt="SARSS Logo"
@@ -32,74 +74,189 @@ const Company: React.FC = () => {
                 </div>
               </Link>
               <nav className="hidden md:flex gap-6">
-                <Link href="/">
-                  <div className="text-white hover:text-gray-300 transition-colors">
-                    Home
-                  </div>
+                <Link href="/" className="text-teal-100 hover:text-white transition-colors">
+                  Dashboard
                 </Link>
-                <Link href="/about">
-                  <div className="text-white hover:text-gray-300 transition-colors">
-                    About Us
-                  </div>
+                <Link href="/about" className="text-teal-100 hover:text-white transition-colors">
+                  About Us
                 </Link>
               </nav>
             </div>
-            <nav className="flex gap-6">
-              <Link href="/login">
-                <div className="text-white text-xl cursor-pointer hover:text-gray-300">
-                  Login
-                </div>
-              </Link>
-            </nav>
           </div>
         </div>
       </header>
 
-      <main className="flex-1 py-12 relative z-10">
+      {/* Main Content */}
+      <main className="flex-1 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-white mb-4">Student Data</h1>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Access and manage student data efficiently and effectively.
-            </p>
+          {/* Search Section */}
+          <div className="mb-8">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-teal-300/60" size={20} />
+              <input
+                type="text"
+                placeholder="Search by name, branch, or roll number..."
+                className="w-full pl-10 pr-4 py-2 bg-[#1B4242]/20 border border-teal-700/30 rounded-lg text-white placeholder-teal-300/60 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <StudentTable />
+          {/* Students Table */}
+          <div className="bg-[#1B4242]/20 rounded-xl border border-teal-700/30 backdrop-blur-lg overflow-hidden">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-teal-700/30">
+                  <th className="text-left p-4 text-teal-100">Student</th>
+                  <th className="text-left p-4 text-teal-100">Branch</th>
+                  <th className="text-left p-4 text-teal-100">Skills</th>
+                  <th className="text-left p-4 text-teal-100">CGPA</th>
+                  <th className="text-left p-4 text-teal-100">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredStudents.map((student) => (
+                  <tr
+                    key={student.id}
+                    className="border-b border-teal-700/30 hover:bg-teal-700/10 cursor-pointer transition-colors"
+                    onClick={() => {
+                      setSelectedStudent(student);
+                      setIsModalOpen(true);
+                    }}
+                  >
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        <Image
+                          src={student.image}
+                          alt={student.name}
+                          width={40}
+                          height={40}
+                          className="rounded-full"
+                        />
+                        <div>
+                          <div className="text-white">{student.name}</div>
+                          <div className="text-sm text-teal-200/70">{student.roll}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-4 text-teal-100">{student.branch}</td>
+                    <td className="p-4">
+                      <div className="flex gap-2 flex-wrap">
+                        {student.skills.slice(0, 3).map((skill, index) => (
+                          <span
+                            key={index}
+                            className="px-2 py-1 rounded-full bg-teal-500/10 text-teal-300 text-sm"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                        {student.skills.length > 3 && (
+                          <span className="px-2 py-1 rounded-full bg-teal-700/20 text-teal-200 text-sm">
+                            +{student.skills.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="p-4 text-teal-100">{student.cgpa}</td>
+                    <td className="p-4">
+                      <button className="flex items-center text-teal-300 hover:text-teal-200">
+                        View Profile <ChevronRight size={16} className="ml-2" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </main>
 
-      <footer className="bg-[#1B4242]/95 backdrop-blur-sm text-white py-8 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex flex-col gap-2">
-              <h3 className="font-semibold mb-2">About SARSS</h3>
-              <p className="text-sm text-gray-300">
-                Dedicated to providing the latest updates and insights to our community.
-              </p>
-            </div>
-            <div className="flex flex-col gap-2">
-              <h3 className="font-semibold mb-2">Quick Links</h3>
-              <div className="flex flex-col gap-2 text-sm text-gray-300">
-                <Link href="/privacy">Privacy Policy</Link>
-                <Link href="/terms">Terms of Service</Link>
-                <Link href="/contact">Contact Us</Link>
+      {/* Student Detail Modal */}
+      {isModalOpen && selectedStudent && (
+        <div className="fixed inset-0 z-50">
+          <div
+            className="fixed inset-0 bg-[#092635]/80 backdrop-blur-sm"
+            onClick={() => setIsModalOpen(false)}
+          />
+          <div className="fixed inset-0 flex items-center justify-center p-4">
+            <div className="bg-gradient-to-b from-[#1B4242] to-[#092635] rounded-xl border border-teal-700/30 max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute right-4 top-4 text-teal-300 hover:text-white"
+              >
+                <X size={20} />
+              </button>
+              <div className="p-6">
+                <div className="flex items-center gap-4 mb-6">
+                  <Image
+                    src={selectedStudent.image}
+                    alt={selectedStudent.name}
+                    width={80}
+                    height={80}
+                    className="rounded-full"
+                  />
+                  <div>
+                    <h2 className="text-2xl font-bold text-white">{selectedStudent.name}</h2>
+                    <p className="text-teal-200/70">{selectedStudent.roll}</p>
+                  </div>
+                </div>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+                      <GraduationCap className="text-teal-300" size={20} />
+                      Academic Information
+                    </h3>
+                    <div className="grid grid-cols-2 gap-4 text-teal-100">
+                      <div>
+                        <p className="text-sm text-teal-200/70">Branch</p>
+                        <p>{selectedStudent.branch}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-teal-200/70">Year of Study</p>
+                        <p>{selectedStudent.year}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-teal-200/70">CGPA</p>
+                        <p>{selectedStudent.cgpa}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+                      <Briefcase className="text-teal-300" size={20} />
+                      Skills & Experience
+                    </h3>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-sm text-teal-200/70 mb-2">Skills</p>
+                        <div className="flex gap-2 flex-wrap">
+                          {selectedStudent.skills.map((skill, index) => (
+                            <span
+                              key={index}
+                              className="px-2 py-1 rounded-full bg-teal-500/10 text-teal-300 text-sm"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-sm text-teal-200/70 mb-2">Internships</p>
+                        <ul className="list-disc pl-5 text-teal-100">
+                          {selectedStudent.internships.map((internship, index) => (
+                            <li key={index}>{internship}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <h3 className="font-semibold mb-2">Connect With Us</h3>
-              <p className="text-sm text-gray-300">
-                Follow us on social media for the latest updates.
-              </p>
-            </div>
-          </div>
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-300">
-            <p>&copy; 2025 GCELT All Rights Reserved.</p>
-            <p>Developed & Maintained by SARSS</p>
           </div>
         </div>
-      </footer>
+      )}
     </div>
   );
 };

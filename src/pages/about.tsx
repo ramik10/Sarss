@@ -20,29 +20,29 @@ const About = () => {
     {
       name: "Arijit Ghosal",
       role: "Full Stack AI Developer",
-      description: "Passionate about creating innovative solutions and building scalable applications. Experienced in modern web technologies and cloud architecture.",
+      description: "Passionate about creating innovative solutions and building scalable applications. Experienced in modern web technologies and AI applications.",
       image: "/api/placeholder/400/400",
       social: {
-        github: "https://github.com",
-        linkedin: "https://linkedin.com",
-        email: "mailto:example@email.com"
+        github: "https://github.com/arijitghosal03",
+        linkedin: "https://www.linkedin.com/in/arijit-ghosal-b80257214/",
+        email: "mailto:arijitghosal0309@email.com"
       }
     },
     {
       name: "Ramik Mukherjee",
       role: "Full Stack Web3 Developer",
-      description: "Creative designer with a keen eye for detail. Specializes in creating intuitive and engaging user experiences that bridge aesthetics and functionality.",
+      description: "Web3 developer with a keen eye for detail. Specializes in creating efficient product based solutions.",
       image: "/api/placeholder/400/400",
       social: {
         github: "https://github.com",
-        linkedin: "https://linkedin.com",
+        linkedin: "https://www.linkedin.com/in/ramik-mukherjee/",
         email: "mailto:example@email.com"
       }
     },
     {
       name: "Sayantan Dam",
       role: "Frontend Developer",
-      description: "Expert in building robust backend systems and optimizing database performance. Passionate about clean code and system architecture.",
+      description: "Expert in building creative frontend systems with enagaging UI. Passionate about leadership and manangement.",
       image: "/api/placeholder/400/400",
       social: {
         github: "https://github.com",
@@ -57,18 +57,18 @@ const About = () => {
       image: "/api/placeholder/400/400",
       social: {
         github: "https://github.com",
-        linkedin: "https://linkedin.com",
+        linkedin: "https://www.linkedin.com/in/shehenaz-islam-942184282",
         email: "mailto:example@email.com"
       }
     },
     {
       name: "SK Nasir Hosen",
       role: "AI/ML Developer",
-      description: "Experienced in creating responsive and accessible web applications. Passionate about modern JavaScript frameworks and web standards.",
+      description: "Experienced in creating scalable AI solutions, with expertise in deep learning frameworks, NLP, and MLOps best practices",
       image: "/api/placeholder/400/400",
       social: {
         github: "https://github.com",
-        linkedin: "https://linkedin.com",
+        linkedin: "https://www.linkedin.com/in/sk-nasir-hosen-40796727a",
         email: "mailto:example@email.com"
       }
     }
@@ -170,7 +170,7 @@ const About = () => {
           >
             <h2 className="text-3xl font-bold text-white mb-6 text-center">Our Mission</h2>
             <p className="text-gray-300 text-lg max-w-4xl mx-auto text-center">
-              At SARSS, we're committed to revolutionizing educational technology through innovative solutions. 
+              At Campus Konnect, we're committed to revolutionizing educational technology through innovative solutions. 
               Our goal is to create seamless, intuitive platforms that enhance the learning experience for students 
               and streamline administrative processes for institutions.
             </p>
@@ -182,7 +182,7 @@ const About = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm">&copy; 2025 GCELT All Rights Reserved.</p>
-            <p className="text-sm">Developed & Maintained by SARSS</p>
+            <p className="text-sm">Developed & Maintained by Campus Konnect</p>
           </div>
         </div>
       </footer>

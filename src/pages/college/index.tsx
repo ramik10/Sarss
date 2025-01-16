@@ -45,7 +45,7 @@ const Home = () => {
       </main>
 
       <footer className="bg-[#1B4242] w-full h-[54px] text-white flex items-center justify-center">
-        <p>&copy;  2025 GCELT All Rights Reserved. Developed & Maintained by SARSS</p>
+        <p>&copy;  2025 GCELT All Rights Reserved. Developed & Maintained by Campus Konnect</p>
       </footer>
     </div>
   );

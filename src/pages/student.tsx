@@ -13,9 +13,8 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="flex gap-6">
-      <Link href="/" className="hover:text-gray-300 transition">Home</Link>
       <Link href="/profile" className="hover:text-gray-300 transition">Profile</Link>
-      <Link href="/resume" className="hover:text-gray-300 transition">Resume</Link>
+      
       <button onClick={handleLogout} className="hover:text-gray-300 transition">Logout</button>
     </nav>
   );
@@ -142,7 +141,7 @@ const Student: React.FC = () => {
       </main>
 
       <footer className="bg-[#1B4242] text-white py-4 text-center">
-        <p>&copy; 2025 GCELT All Rights Reserved. Developed & Maintained by SARSS</p>
+        <p>&copy; 2025 GCELT All Rights Reserved. Developed & Maintained by Campus Konnect</p>
       </footer>
     </div>
   );

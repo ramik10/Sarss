@@ -107,7 +107,7 @@ const Home: React.FC = () => {
               height={48}
               className="rounded-lg"
             />
-            <span className="text-2xl font-bold">GCELT Portal</span>
+            <span className="text-2xl font-bold">Campus Konnect</span>
           </div>
           <nav className="flex items-center gap-6">
             <Link href="/" className="hover:text-gray-300 transition">
@@ -116,9 +116,7 @@ const Home: React.FC = () => {
             <Link href="/about" className="hover:text-gray-300 transition">
               About
             </Link>
-            <Link href="/contact" className="hover:text-gray-300 transition">
-              Contact
-            </Link>
+          
           </nav>
         </div>
       </header>
@@ -128,7 +126,7 @@ const Home: React.FC = () => {
         <div className="bg-gradient-to-b from-[#1B4242] to-[#2d6363] text-white py-20">
           <div className="container mx-auto px-6 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Welcome to GCELT Portal
+              Welcome to Campus Konnect
             </h1>
             <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
               Your gateway to seamless academic management, career development, and institutional excellence

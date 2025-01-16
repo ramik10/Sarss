@@ -281,7 +281,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm">&copy; 2025 GCELT All Rights Reserved.</p>
-            <p className="text-sm">Developed & Maintained by SARSS</p>
+            <p className="text-sm">Developed & Maintained by Campus Konnect</p>
           </div>
         </div>
       </footer>

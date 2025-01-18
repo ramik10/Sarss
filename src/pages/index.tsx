@@ -114,7 +114,7 @@ const Home = () => {
   },[])
   const blogPosts = [
     {
-      imgSrc: "/white.png",
+      imgSrc: "/1.jpg",
       alt: "Blog Post 1",
       title: "Getting Started with Your Journey",
       description: "This is the description for the first image. Add more detailed content here to make it more engaging and informative for your readers.",
@@ -122,7 +122,7 @@ const Home = () => {
       readTime: 5
     },
     {
-      imgSrc: "/white.png",
+      imgSrc: "/2.jpg",
       alt: "Blog Post 2",
       title: "Exploring New Possibilities",
       description: "This is the description for the second image. Make sure to provide valuable insights and interesting perspectives in your blog posts.",
@@ -130,7 +130,7 @@ const Home = () => {
       readTime: 4
     },
     {
-      imgSrc: "/white.png",
+      imgSrc: "/3.jpg",
       alt: "Blog Post 3",
       title: "Advanced Techniques and Tips",
       description: "This is the description for the third image. Share your expertise and help others learn from your experience.",
@@ -138,7 +138,7 @@ const Home = () => {
       readTime: 6
     },
     {
-      imgSrc: "/white.png",
+      imgSrc: "/4.jpg",
       alt: "Blog Post 4",
       title: "Future of Technology",
       description: "Discover the latest trends and innovations shaping the future of technology and digital transformation.",
@@ -146,7 +146,7 @@ const Home = () => {
       readTime: 7
     },
     {
-      imgSrc: "/white.png",
+      imgSrc: "/5.jpg",
       alt: "Blog Post 5",
       title: "Best Practices Guide",
       description: "Learn about industry best practices and how to implement them effectively in your projects.",
@@ -251,7 +251,9 @@ const Home = () => {
         {/* Logout Button */}
         {isLoggedIn && <button
           onClick={() => {
-            localStorage.clear(); // Clear login info
+            localStorage.removeItem('college');
+            localStorage.removeItem('student'); 
+            localStorage.removeItem('company');  // Clear login info
             window.location.href="/"
           }}
           className="text-white hover:text-gray-200 transition-colors font-medium"

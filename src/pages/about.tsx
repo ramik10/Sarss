@@ -21,7 +21,7 @@ const About = () => {
       name: "Arijit Ghosal",
       role: "Full Stack AI Developer",
       description: "Passionate about creating innovative solutions and building scalable applications. Experienced in modern web technologies and AI applications.",
-      image: "/api/placeholder/400/400",
+      image: "/ag.png",
       social: {
         github: "https://github.com/arijitghosal03",
         linkedin: "https://www.linkedin.com/in/arijit-ghosal-b80257214/",
@@ -32,7 +32,7 @@ const About = () => {
       name: "Ramik Mukherjee",
       role: "Full Stack Web3 Developer",
       description: "Web3 developer with a keen eye for detail. Specializes in creating efficient product based solutions.",
-      image: "/api/placeholder/400/400",
+      image: "/ramik.jpg",
       social: {
         github: "https://github.com",
         linkedin: "https://www.linkedin.com/in/ramik-mukherjee/",
@@ -43,7 +43,7 @@ const About = () => {
       name: "Sayantan Dam",
       role: "Frontend Developer",
       description: "Expert in building creative frontend systems with enagaging UI. Passionate about leadership and manangement.",
-      image: "/api/placeholder/400/400",
+      image: "/sayantan.jpg",
       social: {
         github: "https://github.com",
         linkedin: "https://linkedin.com",
@@ -54,7 +54,7 @@ const About = () => {
       name: "Shehenaz Islam",
       role: "UI/UX Developer",
       description: "Experienced in creating responsive and accessible web applications. Passionate about modern JavaScript frameworks and web standards.",
-      image: "/api/placeholder/400/400",
+      image: "/shehenaz.png",
       social: {
         github: "https://github.com",
         linkedin: "https://www.linkedin.com/in/shehenaz-islam-942184282",
@@ -65,7 +65,7 @@ const About = () => {
       name: "SK Nasir Hosen",
       role: "AI/ML Developer",
       description: "Experienced in creating scalable AI solutions, with expertise in deep learning frameworks, NLP, and MLOps best practices",
-      image: "/api/placeholder/400/400",
+      image: "/nasir.png",
       social: {
         github: "https://github.com",
         linkedin: "https://www.linkedin.com/in/sk-nasir-hosen-40796727a",

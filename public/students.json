@@ -1,13 +1,13 @@
 [
   {
     "id": 1,
-    "name": "John Doe",
+    "name": "Arijit Ghosal",
     "roll": "20XX01CS001",
     "branch": "Computer Science",
     "skills": ["JavaScript", "React", "Node.js"],
     "cgpa": "9.1",
     "year": "Final",
-    "image": "/images/john_doe.jpg",
+    "image": "/ag.png",
     "internships": [
       "Frontend Developer at XYZ Corp",
       "Backend Intern at ABC Ltd"
@@ -15,13 +15,13 @@
   },
   {
     "id": 2,
-    "name": "Jane Smith",
+    "name": "Ramik Mukherjee",
     "roll": "20XX01EC002",
     "branch": "Electronics and Communication",
     "skills": ["C++", "Embedded Systems", "VHDL"],
     "cgpa": "8.7",
     "year": "Third",
-    "image": "/images/jane_smith.jpg",
+    "image": "/ramik.jpg",
     "internships": [
       "Embedded Systems Intern at DEF Inc",
       "Research Assistant at GHI Labs"
@@ -29,13 +29,13 @@
   },
   {
     "id": 3,
-    "name": "Michael Johnson",
+    "name": "Sayanatan Dam",
     "roll": "20XX01ME003",
     "branch": "Mechanical Engineering",
     "skills": ["CAD", "MATLAB", "Finite Element Analysis"],
     "cgpa": "8.5",
     "year": "Second",
-    "image": "/images/michael_johnson.jpg",
+    "image": "/sayantan.jpg",
     "internships": [
       "Design Intern at JKL Designs",
       "Thermal Analysis Intern at MNO Engineering"
@@ -43,13 +43,13 @@
   },
   {
     "id": 4,
-    "name": "Emily Davis",
+    "name": "Shehenaz Islam",
     "roll": "20XX01IT004",
     "branch": "Information Technology",
     "skills": ["Python", "Django", "Machine Learning"],
     "cgpa": "9.3",
     "year": "Final",
-    "image": "/images/emily_davis.jpg",
+    "image": "/shehenaz.png",
     "internships": [
       "Data Science Intern at PQR Analytics",
       "Full-Stack Developer Intern at STU Solutions"
@@ -57,13 +57,13 @@
   },
   {
     "id": 5,
-    "name": "Chris Lee",
+    "name": "SK Nasir Hosen",
     "roll": "20XX01CE005",
     "branch": "Civil Engineering",
     "skills": ["AutoCAD", "Structural Analysis", "Surveying"],
     "cgpa": "8.2",
     "year": "Third",
-    "image": "/images/chris_lee.jpg",
+    "image": "/nasir.png",
     "internships": [
       "Site Engineer Intern at VWX Constructions",
       "Structural Analysis Intern at YZ Builders"

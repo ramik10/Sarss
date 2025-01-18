@@ -54,7 +54,7 @@ const About = () => {
       name: "Shehenaz Islam",
       role: "UI/UX Developer",
       description: "Experienced in creating responsive and accessible web applications. Passionate about modern JavaScript frameworks and web standards.",
-      image: "/shehenaz.png",
+      image: "/shehenaz.jpg",
       social: {
         github: "https://github.com",
         linkedin: "https://www.linkedin.com/in/shehenaz-islam-942184282",
@@ -65,7 +65,7 @@ const About = () => {
       name: "SK Nasir Hosen",
       role: "AI/ML Developer",
       description: "Experienced in creating scalable AI solutions, with expertise in deep learning frameworks, NLP, and MLOps best practices",
-      image: "/nasir.png",
+      image: "/nasir.jpg",
       social: {
         github: "https://github.com",
         linkedin: "https://www.linkedin.com/in/sk-nasir-hosen-40796727a",

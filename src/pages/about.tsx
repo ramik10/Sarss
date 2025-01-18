@@ -21,7 +21,7 @@ const About = () => {
       name: "Arijit Ghosal",
       role: "Full Stack AI Developer",
       description: "Passionate about creating innovative solutions and building scalable applications. Experienced in modern web technologies and AI applications.",
-      image: "/ag.png",
+      image: "/Ag.png",
       social: {
         github: "https://github.com/arijitghosal03",
         linkedin: "https://www.linkedin.com/in/arijit-ghosal-b80257214/",

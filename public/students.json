@@ -7,7 +7,7 @@
     "skills": ["JavaScript", "React", "Node.js"],
     "cgpa": "9.1",
     "year": "Final",
-    "image": "/ag.png",
+    "image": "/Ag.png",
     "internships": [
       "Frontend Developer at XYZ Corp",
       "Backend Intern at ABC Ltd"
@@ -49,7 +49,7 @@
     "skills": ["Python", "Django", "Machine Learning"],
     "cgpa": "9.3",
     "year": "Final",
-    "image": "/shehenaz.png",
+    "image": "/shehenaz.jpg",
     "internships": [
       "Data Science Intern at PQR Analytics",
       "Full-Stack Developer Intern at STU Solutions"
@@ -63,7 +63,7 @@
     "skills": ["AutoCAD", "Structural Analysis", "Surveying"],
     "cgpa": "8.2",
     "year": "Third",
-    "image": "/nasir.png",
+    "image": "/nasir.jpg",
     "internships": [
       "Site Engineer Intern at VWX Constructions",
       "Structural Analysis Intern at YZ Builders"

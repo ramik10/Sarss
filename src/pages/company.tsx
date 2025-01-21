@@ -74,8 +74,11 @@ const Company = () => {
                 </div>
               </Link>
               <nav className="hidden md:flex gap-6">
-                <Link href="/" className="text-teal-100 hover:text-white transition-colors">
+                <Link href="/company/dashboard" className="text-teal-100 hover:text-white transition-colors">
                   Dashboard
+                </Link>
+                <Link href="/company" className="text-teal-100 hover:text-white transition-colors">
+                  Students Data
                 </Link>
                 <Link href="/about" className="text-teal-100 hover:text-white transition-colors">
                   About Us

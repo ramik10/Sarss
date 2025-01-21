@@ -266,7 +266,7 @@ const Home: React.FC = () => {
                     case "Company Access Login":{
                       if (username.company===data.username && password.company===data.password){
                         localStorage.setItem("company","1")
-                        router.push("/company")
+                        router.push("/company/dashboard")
                       } else{
                         alert("wrong credentials given")
                       }

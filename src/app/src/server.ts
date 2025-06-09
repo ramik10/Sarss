@@ -1,12 +1,20 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const cors = require('cors');
+import express, { Request, Response, NextFunction, RequestHandler } from 'express';
+import mongoose, { Document, Schema } from 'mongoose';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import User from './models/userSchema';
+import StudentProfile from './models/studentProfileSchema';
+import Company from './models/companySchema';
+import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = "campus_konnect_secret_key_143";
+
+const JWT_SECRET = process.env.SECRET_KEY as string;
+const MONGO_URI = process.env.MONGODB_URI as string;
 
 // Middleware
 app.use(express.json());
@@ -15,96 +23,25 @@ app.use(cors());
 // Connect to MongoDB
 async function connectDB() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/');
+    await mongoose.connect(MONGO_URI);
     console.log("MongoDB Successfully Connected");
-  } catch (err) {
+  } catch (err: any) {
     console.log("MongoDB Connection Error: ", err);
     process.exit(1);
   }
 }
 
 // User Schema
-const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  role: { type: String, enum: ['student', 'college', 'company'], required: true },
-  email: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now }
-});
+interface IUser extends Document {
+  username: string;
+  password: string;
+  role: 'student' | 'college' | 'company';
+  email: string;
+  createdAt: Date;
+}
 
-// Student Profile Schema
-const studentProfileSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  fullName: { type: String, required: true },
-  studentId: { type: String, required: true, unique: true },
-  email: { type: String, required: true },
-  dateOfBirth: { type: Date },
-  gender: { type: String },
-  department: { type: String, required: true },
-  semester: { type: String, required: true },
-  year: { type: String },
-  cgpa: { type: Number, default: 0 },
-  attendance: { type: Number, default: 0 },
-  contactInformation: { type: String },
-  currentSubjects: [{
-    name: String,
-    grade: String,
-    progress: Number,
-    credits: Number
-  }],
-  achievements: [{
-    title: String,
-    date: Date,
-    description: String
-  }],
-  blogPosts: [{
-    title: String,
-    content: String,
-    date: { type: Date, default: Date.now },
-    likes: { type: Number, default: 0 },
-    comments: [{ 
-      text: String, 
-      date: { type: Date, default: Date.now },
-      author: String 
-    }]
-  }],
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
-});
 
-// Company Schema
-const companySchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  companyName: { type: String, required: true },
-  industry: { type: String },
-  hrName: { type: String, required: true },
-  contactEmail: { type: String, required: true },
-  contactPhone: { type: String },
-  address: { type: String },
-  jobPostings: [{
-    title: String,
-    description: String,
-    requirements: [String],
-    salary: String,
-    location: String,
-    type: { type: String, enum: ['full-time', 'part-time', 'internship'] },
-    postedDate: { type: Date, default: Date.now },
-    deadline: Date,
-    isActive: { type: Boolean, default: true }
-  }],
-  appliedStudents: [{
-    studentId: { type: mongoose.Schema.Types.ObjectId, ref: 'StudentProfile' },
-    jobId: String,
-    appliedDate: { type: Date, default: Date.now },
-    status: { type: String, enum: ['applied', 'shortlisted', 'rejected', 'selected'], default: 'applied' }
-  }],
-  createdAt: { type: Date, default: Date.now }
-});
 
-// Models
-const User = mongoose.model('User', userSchema);
-const StudentProfile = mongoose.model('StudentProfile', studentProfileSchema);
-const Company = mongoose.model('Company', companySchema);
 
 // Initialize default users
 async function initializeDefaultUsers() {
@@ -124,51 +61,63 @@ async function initializeDefaultUsers() {
         console.log(`Default ${userData.role} user created: ${userData.username}`);
       }
     }
-  } catch (error) {
+  } catch (error: any) {
     console.log('Error initializing default users:', error);
   }
 }
 
+// Custom Request interface
+interface CustomRequest extends Request {
+  user?: IUser & Document;
+}
+
+type CustomRequestHandler = (req: CustomRequest, res: Response, next: NextFunction) => Promise<void> | void;
+
 // Authentication middleware
-function authenticate(req, res, next) {
+const authenticate: CustomRequestHandler = (req, res, next) => {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader;
   
   if (!token) {
-    return res.status(401).json({ message: 'No authorization token provided' });
+    res.status(401).json({ message: 'No authorization token provided' });
+    return;
   }
 
-  jwt.verify(token, JWT_SECRET, async (err, decoded) => {
+  jwt.verify(token, JWT_SECRET, async (err: jwt.VerifyErrors | null, decoded: string | jwt.JwtPayload | undefined) => {
     if (err) {
-      return res.status(403).json({ message: 'Invalid or expired token' });
+      res.status(403).json({ message: 'Invalid or expired token' });
+      return;
     }
     
     try {
-      const user = await User.findById(decoded.userId);
+      const user = await User.findById((decoded as JwtPayload).userId);
       if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+        res.status(404).json({ message: 'User not found' });
+        return;
       }
       
       req.user = user;
       next();
-    } catch (error) {
-      return res.status(500).json({ message: 'Server error during authentication' });
+    } catch (error: any) {
+      res.status(500).json({ message: 'Server error during authentication' });
+      return;
     }
   });
-}
+};
 
 // Role authorization middleware
-function authorize(roles) {
+const authorize = (roles: string[]): CustomRequestHandler => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ message: 'Access denied for this role' });
+    if (!req.user || !roles.includes(req.user.role)) {
+      res.status(403).json({ message: 'Access denied for this role' });
+      return;
     }
     next();
   };
-}
+};
 
 // Health check
-app.get('/health', (req, res) => {
+app.get('/health', (req: Request, res: Response) => {
   res.json({ 
     status: 'OK', 
     message: 'Campus Konnect Backend is running',
@@ -177,22 +126,25 @@ app.get('/health', (req, res) => {
 });
 
 // AUTH ROUTES
-app.post('/auth/login', async (req, res) => {
+app.post('/auth/login', (async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
 
     if (!username || !password) {
-      return res.status(400).json({ message: 'Username and password are required' });
+      res.status(400).json({ message: 'Username and password are required' });
+      return;
     }
 
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      res.status(401).json({ message: 'Invalid credentials' });
+      return;
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      res.status(401).json({ message: 'Invalid credentials' });
+      return;
     }
 
     const token = jwt.sign(
@@ -211,23 +163,25 @@ app.post('/auth/login', async (req, res) => {
         email: user.email
       }
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Login error:', error);
     res.status(500).json({ message: 'Server error during login' });
   }
-});
+}));
 
-app.post('/auth/register', async (req, res) => {
+app.post('/auth/register', (async (req: Request, res: Response) => {
   try {
     const { username, password, role, email } = req.body;
 
     if (!username || !password || !role || !email) {
-      return res.status(400).json({ message: 'All fields are required' });
+      res.status(400).json({ message: 'All fields are required' });
+      return;
     }
 
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
-      return res.status(409).json({ message: 'Username or email already exists' });
+      res.status(409).json({ message: 'Username or email already exists' });
+      return;
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -250,57 +204,59 @@ app.post('/auth/register', async (req, res) => {
         email: user.email
       }
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Registration error:', error);
     res.status(500).json({ message: 'Server error during registration' });
   }
-});
+}));
 
 // STUDENT ROUTES
-app.get('/student/profile', authenticate, authorize(['student']), async (req, res) => {
+app.get('/student/profile', authenticate, authorize(['student']), (async (req: CustomRequest, res: Response) => {
   try {
-    const profile = await StudentProfile.findOne({ userId: req.user._id });
+    const profile = await StudentProfile.findOne({ userId: req.user?._id });
     if (!profile) {
-      return res.status(404).json({ message: 'Student profile not found' });
+      res.status(404).json({ message: 'Student profile not found' });
+      return;
     }
     res.json(profile);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching student profile:', error);
     res.status(500).json({ message: 'Server error' });
   }
-});
+}) as CustomRequestHandler);
 
-app.put('/student/profile', authenticate, authorize(['student']), async (req, res) => {
+app.put('/student/profile', authenticate, authorize(['student']), (async (req: CustomRequest, res: Response) => {
   try {
-    const profileData = { ...req.body, userId: req.user._id, updatedAt: new Date() };
+    const profileData = { ...req.body, userId: req.user?._id, updatedAt: new Date() };
     
     const profile = await StudentProfile.findOneAndUpdate(
-      { userId: req.user._id },
+      { userId: req.user?._id },
       profileData,
       { new: true, upsert: true, setDefaultsOnInsert: true }
     );
 
     res.json({ message: 'Profile updated successfully', profile });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error updating student profile:', error);
     res.status(500).json({ message: 'Server error' });
   }
-});
+}));
 
-app.get('/student/dashboard', authenticate, authorize(['student']), async (req, res) => {
+app.get('/student/dashboard', authenticate, authorize(['student']), (async (req: CustomRequest, res: Response) => {
   try {
-    const profile = await StudentProfile.findOne({ userId: req.user._id });
+    const profile = await StudentProfile.findOne({ userId: req.user?._id });
     if (!profile) {
-      return res.json({
+      res.json({
         message: 'Profile not found',
         profileExists: false,
         user: {
-          id: req.user._id,
-          username: req.user.username,
-          email: req.user.email,
-          role: req.user.role
+          id: req.user?._id,
+          username: req.user?.username,
+          email: req.user?.email,
+          role: req.user?.role
         }
       });
+      return;
     }
 
     const dashboardData = {
@@ -312,22 +268,22 @@ app.get('/student/dashboard', authenticate, authorize(['student']), async (req, 
     };
 
     res.json(dashboardData);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching student dashboard:', error);
     res.status(500).json({ message: 'Server error' });
   }
-});
+}));
 
 // COLLEGE ADMIN ROUTES
-app.get('/college/dashboard', authenticate, authorize(['college']), async (req, res) => {
+app.get('/college/dashboard', authenticate, authorize(['college']), (async (req: CustomRequest, res: Response) => {
   try {
     const students = await StudentProfile.find({}).populate('userId', 'username email');
     const totalStudents = students.length;
     
-    const departmentStats = {};
-    const yearStats = {};
+    const departmentStats: Record<string, number> = {};
+    const yearStats: Record<string, number> = {};
     
-    students.forEach(student => {
+    students.forEach((student) => {
       if (student.department) {
         departmentStats[student.department] = (departmentStats[student.department] || 0) + 1;
       }
@@ -337,7 +293,7 @@ app.get('/college/dashboard', authenticate, authorize(['college']), async (req, 
       }
     });
 
-    const studentInfo = students.map(student => ({
+    const studentInfo = students.map((student) => ({
       id: student._id,
       fullName: student.fullName,
       studentId: student.studentId,
@@ -356,13 +312,13 @@ app.get('/college/dashboard', authenticate, authorize(['college']), async (req, 
       studentInfo,
       recentRegistrations: students.slice(-5)
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching college dashboard:', error);
     res.status(500).json({ message: 'Server error' });
   }
-});
+}));
 
-app.post('/college/students', authenticate, authorize(['college']), async (req, res) => {
+app.post('/college/students', authenticate, authorize(['college']), (async (req: CustomRequest, res: Response) => {
   try {
     const studentData = req.body;
     
@@ -385,37 +341,38 @@ app.post('/college/students', authenticate, authorize(['college']), async (req, 
       message: 'Student added successfully', 
       student: studentProfile 
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error adding student:', error);
     res.status(500).json({ message: 'Server error' });
   }
-});
+}) as CustomRequestHandler);
 
-app.get('/college/students', authenticate, authorize(['college']), async (req, res) => {
+app.get('/college/students', authenticate, authorize(['college']), (async (req: CustomRequest, res: Response) => {
   try {
     const students = await StudentProfile.find({}).populate('userId', 'username email');
     res.json(students);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching students:', error);
     res.status(500).json({ message: 'Server error' });
   }
-});
+}));
 
 // COMPANY ROUTES
-app.get('/company/dashboard', authenticate, authorize(['company']), async (req, res) => {
+app.get('/company/dashboard', authenticate, authorize(['company']), (async (req: CustomRequest, res: Response) => {
   try {
-    const company = await Company.findOne({ userId: req.user._id });
+    const company = await Company.findOne({ userId: req.user?._id });
     if (!company) {
-      return res.json({
+      res.json({
         message: 'Company profile not found',
         profileExists: false,
         user: {
-          id: req.user._id,
-          username: req.user.username,
-          email: req.user.email,
-          role: req.user.role
+          id: req.user?._id,
+          username: req.user?.username,
+          email: req.user?.email,
+          role: req.user?.role
         }
       });
+      return;
     }
 
     const totalJobs = company.jobPostings.length;
@@ -433,34 +390,35 @@ app.get('/company/dashboard', authenticate, authorize(['company']), async (req, 
       recentJobs: company.jobPostings.slice(-5),
       recentApplications: company.appliedStudents.slice(-10)
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching company dashboard:', error);
     res.status(500).json({ message: 'Server error' });
   }
-});
+}));
 
-app.put('/company/profile', authenticate, authorize(['company']), async (req, res) => {
+app.put('/company/profile', authenticate, authorize(['company']), (async (req: CustomRequest, res: Response) => {
   try {
-    const companyData = { ...req.body, userId: req.user._id };
+    const companyData = { ...req.body, userId: req.user?._id };
     
     const company = await Company.findOneAndUpdate(
-      { userId: req.user._id },
+      { userId: req.user?._id },
       companyData,
       { new: true, upsert: true, setDefaultsOnInsert: true }
     );
 
     res.json({ message: 'Company profile updated successfully', company });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error updating company profile:', error);
     res.status(500).json({ message: 'Server error' });
   }
-});
+}));
 
-app.post('/company/jobs', authenticate, authorize(['company']), async (req, res) => {
+app.post('/company/jobs', authenticate, authorize(['company']), (async (req: CustomRequest, res: Response) => {
   try {
-    const company = await Company.findOne({ userId: req.user._id });
+    const company = await Company.findOne({ userId: req.user?._id });
     if (!company) {
-      return res.status(404).json({ message: 'Company profile not found' });
+      res.status(404).json({ message: 'Company profile not found' });
+      return;
     }
 
     const jobData = {
@@ -472,27 +430,27 @@ app.post('/company/jobs', authenticate, authorize(['company']), async (req, res)
     await company.save();
 
     res.status(201).json({ message: 'Job posted successfully', job: jobData });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error posting job:', error);
     res.status(500).json({ message: 'Server error' });
   }
-});
+}));
 
-app.get('/company/students', authenticate, authorize(['company']), async (req, res) => {
+app.get('/company/students', authenticate, authorize(['company']), (async (req: CustomRequest, res: Response) => {
   try {
     const students = await StudentProfile.find({})
       .populate('userId', 'username email')
       .select('fullName studentId department year cgpa email achievements');
     
     res.json(students);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching students for company:', error);
     res.status(500).json({ message: 'Server error' });
   }
-});
+}));
 
 // Error handling middleware
-app.use((err, req, res, next) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Something went wrong!' });
 });
@@ -508,7 +466,7 @@ async function startServer() {
       console.log(`Health check: http://localhost:${PORT}/health`);
       console.log('Default users created successfully');
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Failed to start server:', error);
     process.exit(1);
   }

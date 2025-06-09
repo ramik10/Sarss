@@ -39,11 +39,15 @@ const RegisterModal = () => {
   return (
     <>
       <Button onClick={() => setIsOpen(true)}>Register</Button>
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        title="Register"
+      >
         <form onSubmit={handleSubmit}>
           <Label>
             Role
-            <Select value={role} onChange={(e) => setRole(e.target.value as "student" | "college" | "company")}>
+            <Select value={role} onValueChange={(value) => setRole(value as "student" | "college" | "company")}>
               <option value="student">Student</option>
               <option value="college">College</option>
               <option value="company">Company</option>

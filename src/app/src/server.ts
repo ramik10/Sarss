@@ -171,11 +171,23 @@ app.post('/auth/login', (async (req: Request, res: Response) => {
 
 app.post('/auth/register', (async (req: Request, res: Response) => {
   try {
-    const { username, password, role, email } = req.body;
+    const { username, password, role, email, secret } = req.body;
 
     if (!username || !password || !role || !email) {
       res.status(400).json({ message: 'All fields are required' });
       return;
+    }
+
+    if(role !== "student" && role !== "college" && role !== "company") {
+      res.status(400).json({ message: 'Invalid role' });
+      return;
+    }
+
+    if(role !== "student") {
+      if (secret !== process.env.SECRET_KEY) {
+        res.status(400).json({ message: 'Invalid secret' });
+        return;
+      }
     }
 
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
